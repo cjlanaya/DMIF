@@ -68,14 +68,17 @@ export async function insertPrediction(params: {
     VALUES
       (${params.userId}, ${params.ticker}, ${params.targetDate}, ${params.direction}, ${params.confidence},
        ${params.lstmPct}, ${params.cnnPct}, ${params.lstmWeight}, ${params.cnnWeight}, ${params.isDemo})
-    RETURNING *
+    RETURNING id, user_id, ticker, target_date::text, direction, confidence, lstm_pct, cnn_pct,
+      lstm_weight, cnn_weight, is_demo, created_at
   `;
   return rows[0];
 }
 
 export async function getPredictionsForUser(userId: number): Promise<PredictionRow[]> {
   const { rows } = await sql<PredictionRow>`
-    SELECT * FROM predictions
+    SELECT id, user_id, ticker, target_date::text, direction, confidence, lstm_pct, cnn_pct,
+      lstm_weight, cnn_weight, is_demo, created_at
+    FROM predictions
     WHERE user_id = ${userId}
     ORDER BY created_at DESC
     LIMIT 200
@@ -87,7 +90,8 @@ export async function getAccuracyForTicker(
   ticker: string
 ): Promise<CompanyAccuracyRow | null> {
   const { rows } = await sql<CompanyAccuracyRow>`
-    SELECT * FROM company_accuracy_stats WHERE ticker = ${ticker} LIMIT 1
+    SELECT ticker, test_accuracy, sample_count, last_evaluated::text
+    FROM company_accuracy_stats WHERE ticker = ${ticker} LIMIT 1
   `;
   return rows[0] ?? null;
 }
