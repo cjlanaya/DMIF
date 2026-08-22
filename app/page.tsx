@@ -34,7 +34,7 @@ export default function LandingPage() {
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
               {t.landing.heroSubtitle}
             </p>
-            <div className="mt-9 flex flex-wrap gap-5">
+            <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/login"
                 className="rounded-md bg-accent px-6 py-3 text-sm font-semibold text-accent-contrast shadow-card transition-transform hover:-translate-y-0.5"
