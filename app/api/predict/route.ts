@@ -5,7 +5,7 @@ import { isKnownTicker } from "@/lib/chart-data";
 import {
   buildDemoPrediction,
   countTradingSteps,
-  nextTradingDayISO,
+  NEXT_TRADING_DATE,
   projectMultiStep,
   type PredictionApiResponse,
 } from "@/lib/predict";
@@ -44,10 +44,18 @@ export async function POST(req: NextRequest) {
   const targetDate: string =
     typeof body?.targetDate === "string" && body.targetDate
       ? body.targetDate
-      : nextTradingDayISO();
+      : NEXT_TRADING_DATE;
 
   if (!ticker || !isKnownTicker(ticker)) {
     return NextResponse.json({ error: "unknown_ticker" }, { status: 400 });
+  }
+
+  // The dataset ends at DATASET_LAST_TRADING_DATE — nothing before
+  // NEXT_TRADING_DATE is a valid prediction target (it's already-known
+  // history, not a forecast). The date picker also enforces this via its
+  // `min` attribute, but the API validates independently of the client.
+  if (targetDate < NEXT_TRADING_DATE) {
+    return NextResponse.json({ error: "target_date_before_dataset_boundary" }, { status: 400 });
   }
 
   const demoMode = process.env.DEMO_MODE === "true";

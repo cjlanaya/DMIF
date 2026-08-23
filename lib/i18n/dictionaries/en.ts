@@ -188,7 +188,8 @@ const dict: Dictionary = {
     chartEmpty: "Select a company to load its chart.",
     predictionPanelTitle: "Prediction",
     targetDateLabel: "Target date",
-    nextTradingDayHint: "Defaults to the next trading day.",
+    nextTradingDayHint:
+      "Direct next-day prediction available for {date}. Later dates use multi-step estimation with reduced confidence.",
     multiStepHint:
       "Dates further out are estimated by iteratively feeding each day's predicted close back into the model — confidence drops the further out you go.",
     runPrediction: "Run Prediction",

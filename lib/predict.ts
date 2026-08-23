@@ -1,3 +1,5 @@
+import { DATASET_LAST_TRADING_DATE } from "./constants";
+
 export type PredictionApiResponse = {
   company: string;
   direction: "UP" | "DOWN";
@@ -22,27 +24,50 @@ export type PredictionResult = PredictionApiResponse & {
 /** Confidence multiplier applied per iterative step beyond the first. */
 const MULTI_STEP_DECAY = 0.85;
 
-function nextTradingDate(from: Date): Date {
+// All date math here is done in UTC on plain "YYYY-MM-DD" strings, never via
+// local-timezone Date methods — that was the source of an earlier off-by-one
+// bug when the server runs in a positive UTC-offset timezone (e.g. Sri
+// Lanka). Since every date we handle is a calendar day with no time
+// component, UTC-anchored arithmetic is both correct and timezone-agnostic.
+
+function parseISODateUTC(iso: string): Date {
+  const [year, month, day] = iso.split("-").map(Number);
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function formatISODateUTC(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function nextTradingDateUTC(from: Date): Date {
   const d = new Date(from);
-  d.setDate(d.getDate() + 1);
+  d.setUTCDate(d.getUTCDate() + 1);
   // Skip weekends — CSE trades Monday-Friday.
-  while (d.getDay() === 0 || d.getDay() === 6) {
-    d.setDate(d.getDate() + 1);
+  while (d.getUTCDay() === 0 || d.getUTCDay() === 6) {
+    d.setUTCDate(d.getUTCDate() + 1);
   }
   return d;
 }
 
-export function nextTradingDayISO(): string {
-  return nextTradingDate(new Date()).toISOString().slice(0, 10);
-}
+/**
+ * The dataset ends at DATASET_LAST_TRADING_DATE, so the only date the model
+ * can make a genuine direct (non-multi-step) prediction for is the next
+ * trading day after that — not "today" on the server's calendar. Every part
+ * of the app (date picker default/min, API validation, step counting) reads
+ * this single derived constant rather than recomputing it separately.
+ */
+export const NEXT_TRADING_DATE: string = formatISODateUTC(
+  nextTradingDateUTC(parseISODateUTC(DATASET_LAST_TRADING_DATE))
+);
 
-/** Number of trading-day steps between the next trading day and targetDate (inclusive), minimum 1. */
+/** Number of trading-day steps between NEXT_TRADING_DATE and targetDate (inclusive), minimum 1. */
 export function countTradingSteps(targetDate: string): number {
-  const target = new Date(`${targetDate}T00:00:00Z`);
-  let cursor = nextTradingDate(new Date());
+  let cursor = NEXT_TRADING_DATE;
+  let cursorDate = parseISODateUTC(cursor);
   let steps = 1;
-  while (cursor.toISOString().slice(0, 10) < target.toISOString().slice(0, 10) && steps < 60) {
-    cursor = nextTradingDate(cursor);
+  while (cursor < targetDate && steps < 60) {
+    cursorDate = nextTradingDateUTC(cursorDate);
+    cursor = formatISODateUTC(cursorDate);
     steps += 1;
   }
   return steps;

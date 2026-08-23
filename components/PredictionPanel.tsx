@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "@/lib/i18n/LocaleProvider";
-import { nextTradingDayISO } from "@/lib/predict";
+import { NEXT_TRADING_DATE } from "@/lib/predict";
 import type { PredictionResult } from "@/lib/predict";
 import { ModelBreakdown } from "@/components/ModelBreakdown";
 
@@ -14,7 +14,7 @@ type PanelState =
 
 export function PredictionPanel({ ticker }: { ticker: string }) {
   const t = useTranslations();
-  const defaultDate = nextTradingDayISO();
+  const defaultDate = NEXT_TRADING_DATE;
   const [targetDate, setTargetDate] = useState(defaultDate);
   const [state, setState] = useState<PanelState>({ status: "idle" });
 
@@ -70,7 +70,9 @@ export function PredictionPanel({ ticker }: { ticker: string }) {
       </div>
 
       <p className="mt-2 text-xs leading-relaxed text-ink-muted">
-        {isMultiStep ? t.dashboard.multiStepHint : t.dashboard.nextTradingDayHint}
+        {isMultiStep
+          ? t.dashboard.multiStepHint
+          : t.dashboard.nextTradingDayHint.replace("{date}", NEXT_TRADING_DATE)}
       </p>
 
       {state.status === "error" && (
