@@ -93,7 +93,11 @@ export type Dictionary = {
     | "offlineMessage"
     | "selectCompanyPrompt"
     | "noChartData"
-    | "noAccuracyData",
+    | "noAccuracyData"
+    | "explainButton"
+    | "explainLoading"
+    | "explainUnavailable"
+    | "explainContributionLabel",
     string
   >;
   history: Record<
@@ -217,6 +221,10 @@ const dict: Dictionary = {
     selectCompanyPrompt: "Choose a company above to get started.",
     noChartData: "No chart data available for this company yet.",
     noAccuracyData: "No accuracy stats recorded for this company yet.",
+    explainButton: "Explain this prediction",
+    explainLoading: "Loading explanation…",
+    explainUnavailable: "Explanation unavailable right now.",
+    explainContributionLabel: "Contribution",
   },
   history: {
     title: "Prediction History",

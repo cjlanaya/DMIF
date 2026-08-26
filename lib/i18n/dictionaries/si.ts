@@ -105,6 +105,10 @@ const dict: Dictionary = {
     selectCompanyPrompt: "ආරම්භ කිරීමට ඉහත සමාගමක් තෝරන්න.",
     noChartData: "මෙම සමාගම සඳහා තවම ප්‍රස්ථාර දත්ත නොමැත.",
     noAccuracyData: "මෙම සමාගම සඳහා තවම නිරවද්‍යතා දත්ත වාර්තා වී නොමැත.",
+    explainButton: "මෙම පුරෝකථනය පැහැදිලි කරන්න",
+    explainLoading: "පැහැදිලි කිරීම පූරණය වෙමින්…",
+    explainUnavailable: "මේ මොහොතේ පැහැදිලි කිරීම ලබා ගත නොහැක.",
+    explainContributionLabel: "දායකත්වය",
   },
   history: {
     title: "පුරෝකථන ඉතිහාසය",

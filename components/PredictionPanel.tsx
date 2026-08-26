@@ -5,6 +5,7 @@ import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import { NEXT_TRADING_DATE } from "@/lib/predict";
 import type { PredictionResult } from "@/lib/predict";
 import { ModelBreakdown } from "@/components/ModelBreakdown";
+import { ExplainPanel } from "@/components/ExplainPanel";
 
 type PanelState =
   | { status: "idle" }
@@ -82,12 +83,20 @@ export function PredictionPanel({ ticker }: { ticker: string }) {
         </div>
       )}
 
-      {state.status === "success" && <PredictionResultView result={state.result} />}
+      {state.status === "success" && (
+        <PredictionResultView result={state.result} ticker={ticker} />
+      )}
     </section>
   );
 }
 
-function PredictionResultView({ result }: { result: PredictionResult }) {
+function PredictionResultView({
+  result,
+  ticker,
+}: {
+  result: PredictionResult;
+  ticker: string;
+}) {
   const t = useTranslations();
   const isUp = result.direction === "UP";
 
@@ -161,6 +170,8 @@ function PredictionResultView({ result }: { result: PredictionResult }) {
         lstmWeight={result.lstm_weight}
         cnnWeight={result.cnn_weight}
       />
+
+      <ExplainPanel ticker={ticker} />
     </div>
   );
 }

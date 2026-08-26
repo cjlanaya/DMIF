@@ -105,6 +105,10 @@ const dict: Dictionary = {
     selectCompanyPrompt: "தொடங்க மேலே ஒரு நிறுவனத்தைத் தேர்ந்தெடுக்கவும்.",
     noChartData: "இந்த நிறுவனத்திற்கு இன்னும் விளக்கப்பட தரவு இல்லை.",
     noAccuracyData: "இந்த நிறுவனத்திற்கு இன்னும் துல்லிய புள்ளிவிவரங்கள் பதிவு செய்யப்படவில்லை.",
+    explainButton: "இந்த முன்னறிவிப்பை விளக்குக",
+    explainLoading: "விளக்கம் ஏற்றப்படுகிறது…",
+    explainUnavailable: "இப்போது விளக்கம் கிடைக்கவில்லை.",
+    explainContributionLabel: "பங்களிப்பு",
   },
   history: {
     title: "முன்னறிவிப்பு வரலாறு",
