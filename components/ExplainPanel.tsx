@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "@/lib/i18n/LocaleProvider";
 import type { ExplainFeature, ExplainResponse } from "@/app/api/explain/[ticker]/route";
+import { getFeatureLabel } from "@/lib/feature-labels";
 
 type ExplainState =
   | { status: "idle" }
@@ -71,7 +72,7 @@ function ExplainResult({ data }: { data: ExplainResponse }) {
               }`}
               aria-hidden="true"
             />
-            {f.feature}
+            {getFeatureLabel(f.feature)}
           </span>
           <span className="tabular-nums text-ink" title={t.dashboard.explainContributionLabel}>
             {f.contribution.toFixed(5)}
