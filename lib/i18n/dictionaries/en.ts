@@ -97,7 +97,11 @@ export type Dictionary = {
     | "explainButton"
     | "explainLoading"
     | "explainUnavailable"
-    | "explainContributionLabel",
+    | "explainContributionLabel"
+    | "confidenceLow"
+    | "confidenceModerate"
+    | "confidenceHigh"
+    | "confidenceCaption",
     string
   >;
   history: Record<
@@ -225,6 +229,10 @@ const dict: Dictionary = {
     explainLoading: "Loading explanation…",
     explainUnavailable: "Explanation unavailable right now.",
     explainContributionLabel: "Contribution",
+    confidenceLow: "Low",
+    confidenceModerate: "Moderate",
+    confidenceHigh: "High",
+    confidenceCaption: "Reflects how closely the two models agree for this specific prediction.",
   },
   history: {
     title: "Prediction History",

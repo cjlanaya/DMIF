@@ -109,6 +109,10 @@ const dict: Dictionary = {
     explainLoading: "පැහැදිලි කිරීම පූරණය වෙමින්…",
     explainUnavailable: "මේ මොහොතේ පැහැදිලි කිරීම ලබා ගත නොහැක.",
     explainContributionLabel: "දායකත්වය",
+    confidenceLow: "අඩු",
+    confidenceModerate: "මධ්‍යම",
+    confidenceHigh: "ඉහළ",
+    confidenceCaption: "මෙම විශේෂිත පුරෝකථනය සඳහා ආකෘති දෙක එකඟ වන ප්‍රමාණය පිළිබිඹු කරයි.",
   },
   history: {
     title: "පුරෝකථන ඉතිහාසය",

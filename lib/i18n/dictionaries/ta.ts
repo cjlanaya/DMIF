@@ -109,6 +109,10 @@ const dict: Dictionary = {
     explainLoading: "விளக்கம் ஏற்றப்படுகிறது…",
     explainUnavailable: "இப்போது விளக்கம் கிடைக்கவில்லை.",
     explainContributionLabel: "பங்களிப்பு",
+    confidenceLow: "குறைவு",
+    confidenceModerate: "மிதமான",
+    confidenceHigh: "அதிக",
+    confidenceCaption: "இந்த குறிப்பிட்ட முன்னறிவிப்பிற்கு இரு மாதிரிகளும் எவ்வளவு நெருக்கமாக உடன்படுகின்றன என்பதை இது பிரதிபலிக்கிறது.",
   },
   history: {
     title: "முன்னறிவிப்பு வரலாறு",

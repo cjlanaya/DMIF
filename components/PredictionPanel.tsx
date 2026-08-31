@@ -6,6 +6,7 @@ import { NEXT_TRADING_DATE } from "@/lib/predict";
 import type { PredictionResult } from "@/lib/predict";
 import { ModelBreakdown } from "@/components/ModelBreakdown";
 import { ExplainPanel } from "@/components/ExplainPanel";
+import { getConfidenceBucket } from "@/lib/confidence";
 
 type PanelState =
   | { status: "idle" }
@@ -143,12 +144,13 @@ function PredictionResultView({
             {t.dashboard.resultFor} {result.targetDate}
           </p>
         </div>
-        <div className="ml-auto text-right">
+        <div className="ml-auto max-w-[9.5rem] text-right">
           <p className="text-xs font-medium uppercase tracking-wide text-ink-muted">
             {t.dashboard.confidenceLabel}
           </p>
-          <p className="font-display text-2xl font-semibold tabular-nums text-ink">
-            {result.confidence.toFixed(1)}%
+          <ConfidenceBadge confidence={result.confidence} />
+          <p className="mt-1.5 text-[11px] leading-snug text-ink-muted">
+            {t.dashboard.confidenceCaption}
           </p>
         </div>
       </div>
@@ -173,5 +175,30 @@ function PredictionResultView({
 
       <ExplainPanel ticker={ticker} />
     </div>
+  );
+}
+
+function ConfidenceBadge({ confidence }: { confidence: number }) {
+  const t = useTranslations();
+  const bucket = getConfidenceBucket(confidence);
+
+  const styles: Record<typeof bucket, string> = {
+    low: "bg-accent-soft text-accent",
+    moderate: "bg-surface-alt text-ink-muted",
+    high: "bg-up-soft text-up",
+  };
+
+  const labels: Record<typeof bucket, string> = {
+    low: t.dashboard.confidenceLow,
+    moderate: t.dashboard.confidenceModerate,
+    high: t.dashboard.confidenceHigh,
+  };
+
+  return (
+    <span
+      className={`mt-1 inline-block rounded-full px-3 py-1 text-lg font-display font-semibold ${styles[bucket]}`}
+    >
+      {labels[bucket]}
+    </span>
   );
 }
