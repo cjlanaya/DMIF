@@ -101,7 +101,8 @@ export type Dictionary = {
     | "confidenceLow"
     | "confidenceModerate"
     | "confidenceHigh"
-    | "confidenceCaption",
+    | "confidenceCaption"
+    | "researchDisclaimer",
     string
   >;
   history: Record<
@@ -233,6 +234,8 @@ const dict: Dictionary = {
     confidenceModerate: "Moderate",
     confidenceHigh: "High",
     confidenceCaption: "Reflects how closely the two models agree for this specific prediction.",
+    researchDisclaimer:
+      "This tool is for academic research purposes only and does not constitute financial advice. Predictions should not be used as the sole basis for investment decisions.",
   },
   history: {
     title: "Prediction History",

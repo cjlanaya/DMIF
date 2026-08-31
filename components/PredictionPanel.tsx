@@ -155,6 +155,10 @@ function PredictionResultView({
         </div>
       </div>
 
+      <p className="rounded-md border border-border bg-surface-alt/60 px-3 py-2 text-xs leading-relaxed text-ink-muted">
+        {t.dashboard.researchDisclaimer}
+      </p>
+
       <div className="grid grid-cols-2 gap-3 text-sm">
         <div className="rounded-md border border-border p-3">
           <p className="text-xs text-ink-muted">{t.dashboard.upProbabilityLabel}</p>
